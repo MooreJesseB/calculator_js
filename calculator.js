@@ -7,7 +7,7 @@ window.onload = function(event){
     var numTwo = parseInt(mainDisplay.innerHTML);
     var operator = operatorDisplay.innerHTML;
     clearMainDisplay();
-    //clearOpDisplay();
+    clearOpDisplay();
     switch (operator){
       case "+":
         updateMainDisplay(numOne + numTwo);
