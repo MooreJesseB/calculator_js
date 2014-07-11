@@ -1,82 +1,66 @@
 window.onload = function(event){
-  var storedNumber = "0";
 
-  // calculate math
-  var processCalc = function() {
-    var numOne = parseInt(storedNumber);
-    var numTwo = parseInt(mainDisplay.innerHTML);
-    var operator = operatorDisplay.innerHTML;
-    clearMainDisplay();
-    clearOpDisplay();
-    switch (operator){
-      case "+":
-        updateMainDisplay(numOne + numTwo);
-        break;
-      case "-":
-        updateMainDisplay(numOne - numTwo);
-        break;
-      case "*":
-        updateMainDisplay(numOne * numTwo);
-        break;
-      case "/":
-        updateMainDisplay(numOne / numTwo);
-        break;
-      default: 
-        alert("Error!!! This is not a valid operator! " + operator);
-        break;
-    }
-  };
+  // special
+  var buttonClr = document.getElementById("but_clr");
+  var buttonEnt = document.getElementById("but_ent");
+
+  // state
+  var storedNumber;
 
   // displays
   var mainDisplay = document.getElementById("result_display_value");
   var operatorDisplay = document.getElementById("operator_display");
 
-  var clearMainDisplay = function() {
-    mainDisplay.innerHTML = "";
-  };
-
-  var clearOpDisplay = function() {
-    operatorDisplay.innerHTML = "";
-  };
-
-  var updateMainDisplay = function(string) {
-    console.log(storedNumber);
-    mainDisplay.innerHTML += string;  
-  };
-
-  // event handlers
+  // digit event handler
   var setClickOnDigit = function(id) {
     var digit = document.getElementById(id);
     digit.onclick = function() {
-      updateMainDisplay(digit.innerHTML);      
+      mainDisplay.innerHTML += digit.innerHTML;      
     };
   };
 
-  var setClickOnOperator = function(id) {    
+  // operator event handler
+  var setClickOnOperator = function(id) {  
     var operator = document.getElementById(id);
     operator.onclick = function() {
-      clearOpDisplay();      
-      operatorDisplay.innerHTML = operator.innerHTML; 
-      storedNumber = mainDisplay.innerHTML;    
-      clearMainDisplay();
+      operatorDisplay.innerHTML = operator.innerHTML;
+      storedNumber = processCalc();
+      mainDisplay.innerHTML = "";
     };
+  };
+
+  // calculate math
+  var processCalc = function() {
+    var result = parseInt(storedNumber);
+    if (storedNumber === undefined) {
+      result = mainDisplay.innerHTML;
+    } else if (operatorDisplay.innerHTML === "+") {
+      result += parseInt(mainDisplay.innerHTML);
+    } else if (operatorDisplay.innerHTML === "-") {
+      result -= parseInt(mainDisplay.innerHTML);
+    } else if (operatorDisplay.innerHTML === "*") {
+      result *= parseInt(mainDisplay.innerHTML);
+    } else if (operatorDisplay.innerHTML === "/") {
+      result /= parseInt(mainDisplay.innerHTML);
+    } else {
+      result = mainDisplay.innerHTML;
+    }
+    return result;
   };
 
   // special event handlers
-  var buttonClr = document.getElementById("but_clr");
-  var buttonEnt = document.getElementById("but_ent");
-
   buttonClr.onclick = function(event) {
-    clearMainDisplay();
-    clearOpDisplay();
+    mainDisplay.innerHTML = ""
+    operatorDisplay.innerHTML = "";
     storedNumber = "";
   };
 
   buttonEnt.onclick = function(event) {
-    processCalc();
+    mainDisplay.innerHTML = processCalc();
+    operatorDisplay.innerHTML = "";
   };
 
-  // digits
+    // digits
   setClickOnDigit("but_one");
   setClickOnDigit("but_two");
   setClickOnDigit("but_three");
@@ -94,3 +78,4 @@ window.onload = function(event){
   setClickOnOperator("but_mult");
   setClickOnOperator("but_div");  
 };
+
