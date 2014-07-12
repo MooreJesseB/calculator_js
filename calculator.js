@@ -11,24 +11,6 @@ window.onload = function(event){
   var mainDisplay = document.getElementById("result_display_value");
   var operatorDisplay = document.getElementById("operator_display");
 
-  // digit event handler
-  var setClickOnDigit = function(id) {
-    var digit = document.getElementById(id);
-    digit.onclick = function() {
-      mainDisplay.innerHTML += digit.innerHTML;      
-    };
-  };
-
-  // operator event handler
-  var setClickOnOperator = function(id) {  
-    var operator = document.getElementById(id);
-    operator.onclick = function() {
-      operatorDisplay.innerHTML = operator.innerHTML;
-      storedNumber = processCalc();
-      mainDisplay.innerHTML = "";
-    };
-  };
-
   // calculate math
   var processCalc = function() {
     var result = parseInt(storedNumber);
@@ -46,6 +28,24 @@ window.onload = function(event){
       result = mainDisplay.innerHTML;
     }
     return result;
+  };
+
+  // digit event handler
+  var setClickOnDigit = function(id) {
+    var digit = document.getElementById(id);
+    digit.onclick = function() {
+      mainDisplay.innerHTML += digit.innerHTML;      
+    };
+  };
+
+  // operator event handler
+  var setClickOnOperator = function(id) {  
+    var operator = document.getElementById(id);
+    operator.onclick = function() {
+      operatorDisplay.innerHTML = operator.innerHTML;
+      storedNumber = processCalc();
+      mainDisplay.innerHTML = "";
+    };
   };
 
   // special event handlers
